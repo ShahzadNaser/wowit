@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include wowit *.css
+recursive-include wowit *.csv
+recursive-include wowit *.html
+recursive-include wowit *.ico
+recursive-include wowit *.js
+recursive-include wowit *.json
+recursive-include wowit *.md
+recursive-include wowit *.png
+recursive-include wowit *.py
+recursive-include wowit *.svg
+recursive-include wowit *.txt
+recursive-exclude wowit *.pyc
