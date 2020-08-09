@@ -1,1 +1,24 @@
-[]
+[
+ {
+  "docstatus": 0,
+  "doctype": "Custom Script",
+  "dt": "Customer",
+  "modified": "2020-06-18 09:19:59.217639",
+  "name": "Customer-Client",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "if(!(frappe.user.has_role(['Accounts Manager','System Manager'])))\r\n{\r\ncur_frm.dashboard.frm.fields[0].df.hidden=1;\r\n}"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Custom Script",
+  "dt": "Sales Invoice",
+  "modified": "2020-08-08 11:18:00.448247",
+  "name": "Sales Invoice-Client",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Sales Invoice', {\n\trefresh(frm) {\n\t\tconsole.log(\"===============Sales Invoice====================\");\n\t},\n\tcontract_details_: function(frm){\n\t   [\"posting_date\",\"contract_deale_type_\",\"contract_summary\",\"contract_duration\"].forEach(function(key){\n        if(key in cur_frm.doc)\n            cur_frm.doc.contract_details_ = cur_frm.doc.contract_details_.split(\"{\"+key+\"}\").join(cur_frm.doc[key]);\n        });\n        cur_frm.refresh_field(\"contract_details_\");\n\t},\n\tcontract_type: function(frm){\n\t\tfrappe.db.get_value(\"Contract Type\", cur_frm.doc.contract_type, \"terms\", (r) => {\n\t\t\tif(r && 'terms' in r)\n\t\t\t    cur_frm.doc.contract_details_ = r.terms;\n    \t\tcur_frm.trigger(\"contract_details_\");\n    \t\t\n\t\t});\n\t}\n})"
+ }
+]
