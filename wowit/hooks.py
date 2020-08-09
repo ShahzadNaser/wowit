@@ -121,7 +121,8 @@ web_include_js = ["/assets/js/wowit.web.min.js"]
 
 # Overriding Methods
 # ------------------------------
-#
+fixtures = ["Custom Script", "Custom Field"]
+# fixtures = ["Custom Script","Property Setter", "Custom Field", "Report", "Workflow"]
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "wowit.event.get_events"
 # }
