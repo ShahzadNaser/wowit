@@ -1,6 +1,8 @@
 {
     "css/wowit.min.css": [
-		],
+		"public/css/wow.css"
+    ],
     "js/wowit.min.js" : [
+		"public/css/wow.js"
     ]
 }
