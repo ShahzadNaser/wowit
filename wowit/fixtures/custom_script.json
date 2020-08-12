@@ -3,12 +3,12 @@
   "docstatus": 0,
   "doctype": "Custom Script",
   "dt": "Quotation",
-  "modified": "2020-08-09 08:43:03.888621",
+  "modified": "2020-08-12 06:15:06.838168",
   "name": "Quotation-Client",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "script": "frappe.ui.form.on('Quotation', {\n\trefresh(frm) {\n\t\tcur_frm.fields_dict[\"items\"].grid.wrapper.find(\".grid-remove-rows\").hide();\n\t\t\n\t\tcur_frm.fields_dict[\"items\"].grid.wrapper.find(\".grid-delete-row\").hide();\n\t},\n\titems_package:function(frm){\n\t    cur_frm.clear_table(\"items\")\n        refresh_field(\"items\");\n\t    frappe.db.get_list('Items', {\n\t        parent:\"Items Package\",\n\t        filters:{\"parent\": frm.doc.items_package},\n            fields:[\"item_code\",\"qty\",\"rate\"]\n\t\t}).then(r => {\n\t\t\tif(r){\n\t\t\t    let d = \"\";\n\t\t\t    r.forEach(function(item) {\n                    let d = frappe.model.add_child(frm.doc, \"Quotation Item\", \"items\");\n                    d.item_code = item.item_code;\n                    d.qty = item.qty;\n                    d.rate = item.rate;\n                    cur_frm.script_manager.trigger(\"item_code\", d.doctype, d.name);\n                });\n\t\t\t}\n            refresh_field(\"items\");\n\t\t});\n\t}\n})"
+  "script": "frappe.ui.form.on('Quotation', {\n\trefresh(frm) {\n\t\t\n\t},\n\titems_package:function(frm){\n\t    cur_frm.clear_table(\"items\");\n\t    refresh_field(\"items\");\n\t    if(frm.doc.items_package){\n    \t    frappe.db.get_list('Items', {\n    \t        parent:\"Items Package\",\n    \t        filters:{\"parent\": frm.doc.items_package},\n                fields:[\"item_code\",\"qty\",\"rate\"]\n    \t\t}).then(r => {\n    \t\t\tif(r){\n    \t\t\t    r.forEach(function(item) {\n                        let d = frappe.model.add_child(frm.doc, \"Quotation Item\", \"items\");\n                        d.item_code = item.item_code;\n                        console.log(d.doctype,d,name);\n                        cur_frm.script_manager.trigger(\"item_code\", d.doctype, d.name);\n                        d.qty = item.qty;\n                        setTimeout(function(){\n    \t\t\t            frappe.model.set_value(\"Quotation Item\", d.name, \"rate\", item.rate);\n    \t\t\t        \n    \t\t\t        }, 3000);\n                        \n                    });\n    \t\t\t}\n                refresh_field(\"items\");\n    \t\t});\n\t    }\n\t}\n})"
  },
  {
   "docstatus": 0,
@@ -31,5 +31,16 @@
   "parentfield": null,
   "parenttype": null,
   "script": "frappe.ui.form.on('Sales Invoice', {\n\trefresh(frm) {\n\t\tconsole.log(\"===============Sales Invoice====================\");\n\t},\n\tcontract_details_: function(frm){\n\t   [\"posting_date\",\"contract_deale_type_\",\"contract_summary\",\"contract_duration\"].forEach(function(key){\n        if(key in cur_frm.doc)\n            cur_frm.doc.contract_details_ = cur_frm.doc.contract_details_.split(\"{\"+key+\"}\").join(cur_frm.doc[key]);\n        });\n        cur_frm.refresh_field(\"contract_details_\");\n\t},\n\tcontract_type: function(frm){\n\t\tfrappe.db.get_value(\"Contract Type\", cur_frm.doc.contract_type, \"terms\", (r) => {\n\t\t\tif(r && 'terms' in r)\n\t\t\t    cur_frm.doc.contract_details_ = r.terms;\n    \t\tcur_frm.trigger(\"contract_details_\");\n    \t\t\n\t\t});\n\t}\n})"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Custom Script",
+  "dt": "Opportunity",
+  "modified": "2020-08-12 06:15:02.373397",
+  "name": "Opportunity-Client",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Opportunity', {\n\trefresh(frm) {\n\t\t// your code here\n\t},\n\t\titems_package:function(frm){\n\t    cur_frm.clear_table(\"items\");\n\t    refresh_field(\"items\");\n\t    if(frm.doc.items_package){\n    \t    frappe.db.get_list('Items', {\n    \t        parent:\"Items Package\",\n    \t        filters:{\"parent\": frm.doc.items_package},\n                fields:[\"item_code\",\"qty\",\"rate\"]\n    \t\t}).then(r => {\n    \t\t\tif(r){\n    \t\t\t    r.forEach(function(item) {\n                        let d = frappe.model.add_child(frm.doc, \"Opportunity Item\", \"items\");\n                        d.item_code = item.item_code;\n                        d.qty = item.qty;\n                        cur_frm.script_manager.trigger(\"item_code\", d.doctype, d.name);\n                    });\n    \t\t\t}\n                refresh_field(\"items\");\n    \t\t});\n\t    }\n\t}\n})"
  }
 ]
