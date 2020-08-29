@@ -2238,5 +2238,21 @@
   "property": "reqd",
   "property_type": "Check",
   "value": "1"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Task",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocType",
+  "field_name": null,
+  "modified": "2020-08-29 14:38:35.243429",
+  "name": "Task-track_changes",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "property": "track_changes",
+  "property_type": "Check",
+  "value": "1"
  }
 ]
