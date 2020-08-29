@@ -86,11 +86,9 @@ web_include_js = ["/assets/js/wowit.web.min.js"]
 # Hook on document methods and events
 
 # doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
+#     "Comment": {
+# 		"validate" : "wowit.modules.comment.comment.validate_override",
+# 	}
 # }
 
 # Scheduled Tasks
